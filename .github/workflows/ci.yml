@@ -31,7 +31,7 @@ jobs:
   # =========================================================
   #
   # For 20.04:  bare and activate Boost, OpenCV
-  # For latest: activate Boost, Eigen, OpenCV, with Ninja
+  # For latest: activate Boost, Eigen, OpenCV, Armadillo with Ninja
   #
   # XTensor tests are run for conda/mamba and MacOS
   Linux_MPI:
@@ -49,8 +49,8 @@ jobs:
               flags: '-DHIGHFIVE_TEST_BOOST:Bool=ON -DHIGHFIVE_TEST_OPENCV:Bool=ON -GNinja'
           - config:
               os: ubuntu-latest
-              pkgs: 'libboost-all-dev libeigen3-dev libopencv-dev'
-              flags: '-DHIGHFIVE_TEST_BOOST:Bool=ON -DHIGHFIVE_TEST_EIGEN:Bool=ON -DHIGHFIVE_TEST_OPENCV:Bool=ON -GNinja'
+              pkgs: 'libboost-all-dev libeigen3-dev libopencv-dev libarmadillo-dev'
+              flags: '-DHIGHFIVE_TEST_BOOST:Bool=ON -DHIGHFIVE_TEST_EIGEN:Bool=ON -DHIGHFIVE_TEST_OPENCV:Bool=ON -DHIGHFIVE_TEST_ARMA:Bool=ON -GNinja'
           - config:
               os: ubuntu-20.04
               pkgs: 'libboost-all-dev'
@@ -201,7 +201,7 @@ jobs:
     - name: "Install libraries"
       run: |
         sudo apt-get -qq update
-        sudo apt-get -qq install libboost-all-dev libeigen3-dev libhdf5-dev libsz2 ninja-build
+        sudo apt-get -qq install libboost-all-dev libeigen3-dev libhdf5-dev libsz2 libarmadillo-dev ninja-build
 
     - name: Build
       env: ${{matrix.env}}
@@ -210,6 +210,7 @@ jobs:
           -GNinja
           -DHIGHFIVE_TEST_BOOST:BOOL=ON
           -DHIGHFIVE_TEST_EIGEN:BOOL=ON
+          -DHIGHFIVE_TEST_ARMA:BOOL=ON
           -DHIGHFIVE_BUILD_DOCS:BOOL=FALSE
           -DHIGHFIVE_GLIBCXX_ASSERTIONS=${HIGHFIVE_GLIBCXX_ASSERTIONS:-OFF}
           -DHIGHFIVE_SANITIZER=${HIGHFIVE_SANITIZER:-OFF}
@@ -302,7 +303,7 @@ jobs:
         submodules: true
 
     - name: "Install libraries (OSX)"
-      run: brew install boost eigen hdf5 ninja xtensor
+      run: brew install boost eigen hdf5 ninja xtensor armadillo
 
     - name: Build
       run: |
@@ -311,6 +312,7 @@ jobs:
           -DHIGHFIVE_TEST_BOOST:BOOL=ON
           -DHIGHFIVE_TEST_EIGEN:BOOL=ON
           -DHIGHFIVE_TEST_XTENSOR:BOOL=ON
+          -DHIGHFIVE_TEST_ARMA:BOOL=ON
           -DHIGHFIVE_BUILD_DOCS:BOOL=FALSE
           -DHIGHFIVE_TEST_SINGLE_INCLUDES=ON
           -DCMAKE_CXX_FLAGS="-coverage -O0"

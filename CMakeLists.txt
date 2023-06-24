@@ -55,6 +55,7 @@ option(HIGHFIVE_TEST_BOOST "Enable Boost testing" OFF)
 option(HIGHFIVE_TEST_EIGEN "Enable Eigen testing" OFF)
 option(HIGHFIVE_TEST_OPENCV "Enable OpenCV testing" OFF)
 option(HIGHFIVE_TEST_XTENSOR "Enable xtensor testing" OFF)
+option(HIGHFIVE_TEST_ARMA "Enable Armadiilo testing" OFF)
 option(HIGHFIVE_TEST_HALF_FLOAT "Enable half-precision floats" OFF)
 
 # TODO remove entirely.

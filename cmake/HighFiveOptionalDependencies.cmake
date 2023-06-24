@@ -37,6 +37,16 @@ if(NOT TARGET HighFiveOpenCVDependency)
   endif()
 endif()
 
+if(NOT TARGET HighFiveArmadilloDependency)
+  add_library(HighFiveArmadilloDependency INTERFACE)
+  if(HIGHFIVE_TEST_ARMA)
+    find_package(Armadillo REQUIRED)
+    target_include_directories(HighFiveArmadilloDependency SYSTEM INTERFACE ${ARMADILLO_INCLUDE_DIRS})
+    target_link_libraries(HighFiveArmadilloDependency INTERFACE ${ARMADILLO_LIBRARIES})
+    target_compile_definitions(HighFiveArmadilloDependency INTERFACE HIGHFIVE_TEST_ARMA=1)
+  endif()
+endif()
+
 if(NOT TARGET HighFiveOptionalDependencies)
   add_library(HighFiveOptionalDependencies INTERFACE)
   target_link_libraries(HighFiveOptionalDependencies INTERFACE
@@ -44,5 +54,6 @@ if(NOT TARGET HighFiveOptionalDependencies)
     HighFiveEigenDependency
     HighFiveXTensorDependency
     HighFiveOpenCVDependency
+    HighFiveArmadilloDependency
   )
 endif()
